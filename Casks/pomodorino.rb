@@ -1,6 +1,6 @@
 cask "pomodorino" do
   version "1.0.0"
-  sha256 "PLACEHOLDER"
+  sha256 "9b0cd886ef48d8e45e913a051cb41ff3ba4bd6b0033d28bac15f174feab03c2c"
 
   url "https://github.com/duanecilliers/Pomodorino/releases/download/v#{version}/Pomodorino-#{version}.dmg"
   name "Pomodorino"
