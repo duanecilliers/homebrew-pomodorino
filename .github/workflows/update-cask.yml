@@ -1,0 +1,32 @@
+name: Update Cask
+
+on:
+  repository_dispatch:
+    types: [update-cask]
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    name: Update Pomodorino Cask
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update cask formula
+        env:
+          VERSION: ${{ github.event.client_payload.version }}
+          SHA256: ${{ github.event.client_payload.sha256 }}
+        run: |
+          sed -i "s/version \".*\"/version \"$VERSION\"/" Casks/pomodorino.rb
+          sed -i "s/sha256 \".*\"/sha256 \"$SHA256\"/" Casks/pomodorino.rb
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/pomodorino.rb
+          git commit -m "Update Pomodorino to v${{ github.event.client_payload.version }}"
+          git push
